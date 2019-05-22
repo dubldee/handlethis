@@ -24,9 +24,9 @@ app.get('/', (req, res) => res.send('Hello world'))
 app.use(handle404())
 app.use(handleErrors())
 
-app.listen()
+app.listen(3000, () => console.log('Express application listening on port 3000'))
 ```
 
-thats it!
+### thats it!
 
 
