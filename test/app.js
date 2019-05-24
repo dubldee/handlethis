@@ -5,7 +5,7 @@ let handlethis = require('../index.js')
 
 // Necessary routes/middleware
 app.get('/', (req, res) => res.send('Hello World!'))
-
+app.get('/robots.txt', handlethis.handleRobots)
 app.use(handlethis.handle404())
 app.use(handlethis.handleErrors())
 

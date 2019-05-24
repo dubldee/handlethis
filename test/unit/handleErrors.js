@@ -27,4 +27,26 @@ describe('handlethis tests', () => {
       done()
     })
   })
+  it('should direct user to our robots.txt', (done) => {
+    const appDir = path.join(__dirname, '../')
+    const testApp = fork(path.join(appDir, 'app.js'), { 'stdio': ['pipe', 'pipe', 'pipe', 'ipc'] })
+
+    testApp.on('message', () => {
+      request('http://localhost:3000')
+        .get('/robots.txt')
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            assert.fail(err)
+            testApp.send('stop')
+          }
+          assert.equal(res.text.includes('User-agent: *'), true, 'User-Agent not found')
+          assert.equal(res.text.includes('Disallow: /'), true, 'Disallow not found')
+          testApp.send('stop')
+        })
+    })
+    testApp.on('exit', () => {
+      done()
+    })
+  })
 })

@@ -3,8 +3,14 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = {
+  handleRobots: handleRobots,
   handle404: handle404,
   handleErrors: handleErrors
+}
+
+function handleRobots (req, res) {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /')
 }
 
 function handle404 () {
